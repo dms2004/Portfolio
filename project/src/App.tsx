@@ -1,0 +1,284 @@
+import React, { useState, useEffect } from 'react';
+import { Mail, Github, Linkedin, Code, Brain, Shield, Cloud, User, Briefcase, FolderOpen, MessageSquare, ChevronDown } from 'lucide-react';
+
+function App() {
+  const [activeSection, setActiveSection] = useState('about');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['about', 'experience', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const skills = [
+    { name: 'AI & Machine Learning', icon: Brain, color: 'text-purple-400' },
+    { name: 'Cybersecurity', icon: Shield, color: 'text-red-400' },
+    { name: 'Cloud Technologies', icon: Cloud, color: 'text-blue-400' },
+    { name: 'Software Development', icon: Code, color: 'text-green-400' }
+  ];
+
+  const experiences = [
+    {
+      role: 'Senior Software Developer',
+      company: 'Tech Innovation Corp',
+      duration: '2022 - Present',
+      description: 'Leading development of AI-powered applications and cloud infrastructure solutions.'
+    },
+    {
+      role: 'Machine Learning Engineer',
+      company: 'DataTech Solutions',
+      duration: '2021 - 2022',
+      description: 'Developed and deployed machine learning models for predictive analytics and automation.'
+    },
+    {
+      role: 'Cybersecurity Analyst',
+      company: 'SecureNet Systems',
+      duration: '2020 - 2021',
+      description: 'Implemented security protocols and conducted vulnerability assessments for enterprise systems.'
+    }
+  ];
+
+  const projects = [
+    {
+      title: 'AI-Powered Analytics Platform',
+      description: 'Built a comprehensive analytics platform using machine learning algorithms for predictive insights.',
+      tech: ['Python', 'TensorFlow', 'AWS', 'React']
+    },
+    {
+      title: 'Cybersecurity Dashboard',
+      description: 'Developed a real-time security monitoring dashboard with threat detection capabilities.',
+      tech: ['Node.js', 'MongoDB', 'Socket.io', 'Vue.js']
+    },
+    {
+      title: 'Cloud Infrastructure Automation',
+      description: 'Created automated deployment pipelines and infrastructure management tools for cloud platforms.',
+      tech: ['Docker', 'Kubernetes', 'Terraform', 'AWS']
+    },
+    {
+      title: 'ML Model Deployment Pipeline',
+      description: 'Designed and implemented a robust MLOps pipeline for model training and deployment.',
+      tech: ['MLflow', 'Apache Airflow', 'FastAPI', 'PostgreSQL']
+    }
+  ];
+
+  return (
+    <div className="bg-gray-900 text-white min-h-screen">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-4">
+            <div className="text-xl font-bold text-white pl-2">Devanand M S</div>
+            <div className="hidden md:flex space-x-8 pr-2">
+              {[
+                { id: 'about', label: 'About', icon: User },
+                { id: 'experience', label: 'Experience', icon: Briefcase },
+                { id: 'projects', label: 'Projects', icon: FolderOpen },
+                { id: 'contact', label: 'Contact', icon: MessageSquare }
+              ].map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => scrollToSection(id)}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-200 ${
+                    activeSection === id
+                      ? 'text-blue-400 bg-blue-400/10'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                  }`}
+                >
+                  <Icon size={16} />
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 py-20">
+          
+          {/* Left Text Content */}
+          <div className="space-y-6 text-center md:text-left">
+            <h1 className="text-4xl md:text-7xl font-bold text-white">
+              Hi, I'm <span className="text-blue-400">Devanand M S</span>
+            </h1>
+            <p className="text-lg md:text-2xl text-gray-300">
+              Software Developer passionate about AI, Machine Learning, Cybersecurity & Cloud Technologies
+            </p>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer" 
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+                <Github size={30} />
+              </a>
+              <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+                <Linkedin size={30} />
+              </a>
+              <a href="mailto:devanandms2004@gmail.com"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+                <Mail size={30} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Image or DMS Circle */}
+          <div className="flex justify-center md:justify-end">
+            <div className="w-96 h-96 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-5xl font-bold text-white animate-float shadow-xl">
+              <img
+                src="Devanand.jpg"
+                alt="Profile"
+                className="w-85 h-85 rounded-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            About <span className="text-blue-400">Me</span>
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <p className="text-lg text-gray-300 leading-relaxed">
+                I'm a software developer with a passion for AI, machine learning, cybersecurity, and cloud technologies. 
+                I enjoy building impactful, real-world solutions across domains.
+              </p>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                My expertise lies in creating robust, scalable applications that leverage cutting-edge technologies 
+                to solve complex problems and drive innovation.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-6">
+              {skills.map((skill, index) => (
+                <div key={index} className="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors duration-200">
+                  <skill.icon className={`w-8 h-8 ${skill.color} mb-4`} />
+                  <h3 className="font-semibold text-white">{skill.name}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            Professional <span className="text-blue-400">Experience</span>
+          </h2>
+          
+          <div className="space-y-8">
+            {experiences.map((exp, index) => (
+              <div key={index} className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                    <p className="text-blue-400 font-medium">{exp.company}</p>
+                  </div>
+                  <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
+                </div>
+                <p className="text-gray-300">{exp.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            Featured <span className="text-blue-400">Projects</span>
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
+              <div key={index} className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-all duration-200 hover:transform hover:scale-105">
+                <h3 className="text-xl font-bold text-white mb-4">{project.title}</h3>
+                <p className="text-gray-300 mb-6">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech, techIndex) => (
+                    <span key={techIndex} className="px-3 py-1 bg-blue-400/20 text-blue-400 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-16">
+            Get In <span className="text-blue-400">Touch</span>
+          </h2>
+          
+          <div className="max-w-2xl mx-auto">
+            <p className="text-lg text-gray-300 mb-12">
+              I'm always interested in new opportunities and exciting projects. 
+              Let's connect and discuss how we can work together.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              <a href="mailto:devanandms2004@gmail.com" 
+                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                <h3 className="font-semibold text-white mb-2">Email</h3>
+              </a>
+              
+              <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer"
+                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                <Github className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                <h3 className="font-semibold text-white mb-2">GitHub</h3>
+              </a>
+              
+              <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
+                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 text-center border-t border-gray-800">
+        <p className="text-gray-400">
+          © 2025 Devanand M S. Built with passion and modern web technologies.
+        </p>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
