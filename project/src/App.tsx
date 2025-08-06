@@ -117,6 +117,15 @@ function App() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 py-20">
+
+          <div className="flex justify-center md:justify-end">
+            <img
+              src="Devanand.jpg"
+              alt="Profile"
+              className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full object-contain p-2 animate-float"
+              style={{ backgroundColor: '#189ad8' }} // Replace with your hex or rgb
+            />
+          </div>
           
           {/* Left Text Content */}
           <div className="space-y-6 text-center md:text-left">
@@ -143,14 +152,6 @@ function App() {
           </div>
 
           {/* Right Image or DMS Circle */}
-          <div className="flex justify-center md:justify-end">
-            <img
-              src="Devanand.jpg"
-              alt="Profile"
-              className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full object-contain p-2 animate-float"
-              style={{ backgroundColor: '#189ad8' }} // Replace with your hex or rgb
-            />
-          </div>
         </div>
       </section>
 
