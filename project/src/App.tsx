@@ -86,30 +86,28 @@ function App() {
     <div className="bg-gray-900 text-white min-h-screen">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between py-4">
-            <div className="text-xl font-bold text-white pl-2">Devanand M S</div>
-            <div className="hidden md:flex space-x-8 pr-2">
-              {[
-                { id: 'about', label: 'About', icon: User },
-                { id: 'experience', label: 'Experience', icon: Briefcase },
-                { id: 'projects', label: 'Projects', icon: FolderOpen },
-                { id: 'contact', label: 'Contact', icon: MessageSquare }
-              ].map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-200 ${
-                    activeSection === id
-                      ? 'text-blue-400 bg-blue-400/10'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                  }`}
-                >
-                  <Icon size={16} />
-                  <span>{label}</span>
-                </button>
-              ))}
-            </div>
+        <div className="flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
+          <div className="text-2xl font-bold text-white ml-10">Devanand M S</div>
+          <div className="hidden md:flex space-x-8">
+            {[
+              { id: 'about', label: 'About', icon: User },
+              { id: 'experience', label: 'Experience', icon: Briefcase },
+              { id: 'projects', label: 'Projects', icon: FolderOpen },
+              { id: 'contact', label: 'Contact', icon: MessageSquare }
+            ].map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-md transition-all duration-200 ${
+                  activeSection === id
+                    ? 'text-blue-400 bg-blue-400/10'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <Icon size={22} />
+                <span>{label}</span>
+              </button>
+            ))}
           </div>
         </div>
       </nav>
@@ -117,7 +115,7 @@ function App() {
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 py-20">
-
+          {/* Left Text Content */}
           <div className="flex justify-center md:justify-end">
             <img
               src="Devanand.jpg"
@@ -126,8 +124,7 @@ function App() {
               style={{ backgroundColor: '#189ad8' }} // Replace with your hex or rgb
             />
           </div>
-          
-          {/* Left Text Content */}
+          {/* Right Image or DMS Circle */}
           <div className="space-y-6 text-center md:text-left">
             <h1 className="text-4xl md:text-7xl font-bold text-white">
               Hi, I'm <span className="text-blue-400">Devanand M S</span>
@@ -150,8 +147,6 @@ function App() {
               </a>
             </div>
           </div>
-
-          {/* Right Image or DMS Circle */}
         </div>
       </section>
 
