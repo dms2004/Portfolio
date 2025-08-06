@@ -144,13 +144,12 @@ function App() {
 
           {/* Right Image or DMS Circle */}
           <div className="flex justify-center md:justify-end">
-            <div className="w-96 h-96 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-5xl font-bold text-white animate-float shadow-xl">
-              <img
-                src="Devanand.jpg"
-                alt="Profile"
-                className="w-85 h-85 rounded-full object-cover"
-              />
-            </div>
+            <img
+              src="Devanand.jpg"
+              alt="Profile"
+              className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full object-contain p-2 animate-float"
+              style={{ backgroundColor: '#189ad8' }} // Replace with your hex or rgb
+            />
           </div>
         </div>
       </section>
