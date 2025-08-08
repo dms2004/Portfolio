@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Github, Linkedin, Code, Brain, Shield, Cloud, User, Briefcase, FolderOpen, MessageSquare, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef  } from 'react';
+import { Mail, Github, X, Menu, Linkedin, Code, Brain, Shield, Cloud, User, Briefcase, FolderOpen, MessageSquare,} from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isClickScrolling = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      // Add this check at the top
+      if (isClickScrolling.current) {
+        return; // Do nothing if a click-scroll is in progress
+      }
+
       const sections = ['about', 'experience', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 150; 
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-            setActiveSection(section);
-            break;
-          }
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const id = sections[i];
+        const element = document.getElementById(id);
+        if (element && element.offsetTop <= scrollPosition) {
+          setActiveSection(id);
+          break;
         }
       }
     };
@@ -26,9 +29,16 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+  
   const scrollToSection = (sectionId: string) => {
+    isClickScrolling.current = true; // Set the flag to true
+    setActiveSection(sectionId);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+
+    // After 1 second, set the flag back to false
+    setTimeout(() => {
+      isClickScrolling.current = false;
+    }, 1000); 
   };
 
   const skills = [
@@ -87,7 +97,9 @@ function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
         <div className="flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
-          <div className="text-2xl font-bold text-white ml-10">Devanand M S</div>
+          <div className="text-2xl font-bold text-white ml-4 md:ml-10">Devanand M S</div>
+
+          {/* Desktop Menu (hidden on mobile) */}
           <div className="hidden md:flex space-x-8">
             {[
               { id: 'about', label: 'About', icon: User },
@@ -109,12 +121,49 @@ function App() {
               </button>
             ))}
           </div>
+
+          {/* Hamburger Menu Button (visible on mobile) */}
+          <div className="md:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-gray-900/95 pb-4">
+            <div className="flex flex-col items-center space-y-4">
+              {[
+                { id: 'about', label: 'About', icon: User },
+                { id: 'experience', label: 'Experience', icon: Briefcase },
+                { id: 'projects', label: 'Projects', icon: FolderOpen },
+                { id: 'contact', label: 'Contact', icon: MessageSquare }
+              ].map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  onClick={() => {
+                    scrollToSection(id);
+                    setIsMenuOpen(false); // Close menu on click
+                  }}
+                  className={`w-1/2 flex justify-center items-center space-x-2 px-3 py-3 rounded-md transition-all duration-200 ${
+                    activeSection === id
+                      ? 'text-blue-400 bg-blue-400/10'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                  }`}
+                >
+                  <Icon size={22} />
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 py-20">
+      <section className="flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8 py-[15rem]">
           {/* Left Text Content */}
           <div className="flex justify-center md:justify-end">
             <img
@@ -132,7 +181,24 @@ function App() {
             <p className="text-lg md:text-2xl text-gray-300">
               Software Developer passionate about AI, Machine Learning, Cybersecurity & Cloud Technologies
             </p>
-            <div className="flex justify-center md:justify-start space-x-4">
+
+            {/* === CTA Buttons === */}
+            <div className="flex justify-center md:justify-start space-x-4 pt-2">
+              <button
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+              >
+                My Projects
+              </button>
+              <button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+              >
+                Contact Me
+              </button>
+            </div>
+            
+            <div className="flex justify-center md:justify-start space-x-4 pt-4">
               <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer" 
                 className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
                 <Github size={30} />
