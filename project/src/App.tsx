@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef  } from 'react';
-import { Mail, Github, X, Menu, Linkedin, Code, Brain, Shield, Cloud, User, Briefcase, FolderOpen, MessageSquare,} from 'lucide-react';
+import { useState, useEffect, useRef  } from 'react';
+import {DiJava, DiPython, DiDocker, DiPostgresql } from 'react-icons/di';
+import { SiC, SiCplusplus, SiKubernetes, SiSpringboot, SiFlutter, SiMysql } from 'react-icons/si';
+
+import { Brain, Shield, Mail, Github, X, Menu, Linkedin, User, Briefcase, FolderOpen, MessageSquare,} from 'lucide-react';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -41,11 +44,19 @@ function App() {
     }, 1000); 
   };
 
-  const skills = [
-    { name: 'AI & Machine Learning', icon: Brain, color: 'text-purple-400' },
-    { name: 'Cybersecurity', icon: Shield, color: 'text-red-400' },
-    { name: 'Cloud Technologies', icon: Cloud, color: 'text-blue-400' },
-    { name: 'Software Development', icon: Code, color: 'text-green-400' }
+  const techSkills = [
+    { name: 'C', icon: SiC },
+    { name: 'C++', icon: SiCplusplus },
+    { name: 'Java', icon: DiJava },
+    { name: 'Python', icon: DiPython },
+    { name: 'Spring Boot', icon: SiSpringboot },
+    { name: 'Flutter', icon: SiFlutter },
+    { name: 'Docker', icon: DiDocker },
+    { name: 'Kubernetes', icon: SiKubernetes },
+    { name: 'SQL', icon: SiMysql },
+    { name: 'PostgreSQL', icon: DiPostgresql },
+    { name: 'AI/ML', icon: Brain },
+    { name: 'Cybersecurity', icon: Shield },
   ];
 
   const experiences = [
@@ -223,27 +234,50 @@ function App() {
             About <span className="text-blue-400">Me</span>
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* This is the main 2-column grid container. It should have only TWO direct children. */}
+          <div className="grid md:grid-cols-2 gap-24 items-start">
+            
+            {/* === CHILD 1: The Left Column === */}
             <div className="space-y-6">
-              <p className="text-lg text-gray-300 leading-relaxed">
-                I'm a software developer with a passion for AI, machine learning, cybersecurity, and cloud technologies. 
-                I enjoy building impactful, real-world solutions across domains.
+              <h2 className="text-2xl font-bold text-center md:text-center mb-6">
+                Who am I?
+              </h2>
+              <p className="text-lg text-gray-300 leading-relaxed text-justify">
+                I'm a software developer and Computer Science student with a strong passion for AI, machine learning, cybersecurity, and cloud technologies. 
+                 I thrive on building impactful, real-world solutions that merge innovation with practical application.
               </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                My expertise lies in creating robust, scalable applications that leverage cutting-edge technologies 
-                to solve complex problems and drive innovation.
+              <p className="text-lg text-gray-300 leading-relaxed text-justify">
+                My expertise lies in designing and developing robust, scalable systems that leverage emerging technologies to solve complex problems. 
+                I aim to create tools and platforms that enhance user experience and deliver lasting value.
+              </p>
+              <p className="text-lg text-gray-300 leading-relaxed text-justify">
+                I'm deeply committed to open-source, continuous learning, and staying at the forefront of emerging technologies through hands-on development and collaboration.
               </p>
             </div>
             
-            <div className="grid grid-cols-2 gap-6">
-              {skills.map((skill, index) => (
-                <div key={index} className="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors duration-200">
-                  <skill.icon className={`w-8 h-8 ${skill.color} mb-4`} />
-                  <h3 className="font-semibold text-white">{skill.name}</h3>
-                </div>
-              ))}
+            {/* === CHILD 2: The Right Column (wrapper for heading and icons) === */}
+            <div> 
+              <h2 className="text-2xl font-bold text-center md:text-center mb-6">
+                My Skills
+              </h2>
+              
+              <div className="grid grid-cols-4 gap-4 text-center">
+                {techSkills.map((skill, index) => (
+                  <div 
+                    key={index} 
+                    className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl
+                              transition-all duration-300 transform hover:-translate-y-1 group"
+                  >
+                    <skill.icon className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                    <span className="mt-3 text-xs sm:text-sm font-semibold text-white">
+                      {skill.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+
+          </div> {/* The 2-column grid container closes here */}
         </div>
       </section>
 
