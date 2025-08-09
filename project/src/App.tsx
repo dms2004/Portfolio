@@ -90,7 +90,7 @@ function App() {
       role: 'Research and Development Intern',
       company: 'CDIT',
       duration: 'Oct 2024 - Mar 2025',
-      description: 'Developed a deep learning system for handwritten Malayalam text recognition from PDFs..',
+      description: 'Developed a deep learning system for handwritten Malayalam text recognition from PDFs.',
       logo: cdit
     },
   ];
@@ -403,7 +403,7 @@ function App() {
       {/* Footer */}
       <footer className="py-8 text-center border-t border-gray-800">
         <p className="text-gray-400">
-          © 2025 Devanand M S. Built with passion and modern web technologies.
+          © 2025 Devanand M S.
         </p>
       </footer>
     </div>
