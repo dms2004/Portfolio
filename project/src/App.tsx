@@ -2,6 +2,8 @@ import { useState, useEffect, useRef  } from 'react';
 import { DiJava, DiPython, DiDocker, DiPostgresql } from 'react-icons/di';
 import { SiC, SiCplusplus, SiKubernetes, SiSpringboot, SiFlutter, SiMysql } from 'react-icons/si';
 import { Server, Pointer, Cloud, Brain, Shield, Mail, Github, X, Menu, Linkedin, User, Briefcase, FolderOpen, MessageSquare,} from 'lucide-react';
+import sedai from './assets/logos/sedai.svg';
+import cdit from './assets/logos/cdit.jpeg';
 
 function App() {
   const [activeSection, setActiveSection] = useState('about');
@@ -78,23 +80,19 @@ function App() {
 
   const experiences = [
     {
-      role: 'Senior Software Developer',
-      company: 'Tech Innovation Corp',
-      duration: '2022 - Present',
-      description: 'Leading development of AI-powered applications and cloud infrastructure solutions.'
+      role: 'Research and Development Intern',
+      company: 'Sedai',
+      duration: 'June 2025 - July 2025',
+      description: 'Built an API framework to classify application types from Kubernetes resource specifications.',
+      logo: sedai
     },
     {
-      role: 'Machine Learning Engineer',
-      company: 'DataTech Solutions',
-      duration: '2021 - 2022',
-      description: 'Developed and deployed machine learning models for predictive analytics and automation.'
+      role: 'Research and Development Intern',
+      company: 'CDIT',
+      duration: 'Oct 2024 - Mar 2025',
+      description: 'Developed a deep learning system for handwritten Malayalam text recognition from PDFs..',
+      logo: cdit
     },
-    {
-      role: 'Cybersecurity Analyst',
-      company: 'SecureNet Systems',
-      duration: '2020 - 2021',
-      description: 'Implemented security protocols and conducted vulnerability assessments for enterprise systems.'
-    }
   ];
 
   const projects = [
@@ -107,8 +105,7 @@ function App() {
       title: 'Cybersecurity Dashboard',
       description: 'Developed a real-time security monitoring dashboard with threat detection capabilities.',
       tech: ['Node.js', 'MongoDB', 'Socket.io', 'Vue.js']
-    },
-    {
+    },{
       title: 'Cloud Infrastructure Automation',
       description: 'Created automated deployment pipelines and infrastructure management tools for cloud platforms.',
       tech: ['Docker', 'Kubernetes', 'Terraform', 'AWS']
@@ -303,28 +300,44 @@ function App() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-            Professional <span className="text-blue-400">Experience</span>
-          </h2>
-          
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <div key={index} className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                    <p className="text-blue-400 font-medium">{exp.company}</p>
+        <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+              Professional <span className="text-blue-400">Experience</span>
+            </h2>
+            
+            <div className="space-y-8">
+              {experiences.map((exp, index) => (
+                <div 
+                  key={index} 
+                  className="flex items-center space-x-6 p-8 bg-gray-800 rounded-xl
+                            transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700"
+                >
+                  {/* Logo on the left (Updated to use <img> tag) */}
+                  <div className="w-12 h-12 flex-shrink-0">
+                    <img 
+                      src={exp.logo} 
+                      alt={`${exp.company} logo`} 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
-                  <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
+
+                  {/* Text content on the right */}
+                  <div className="flex-1">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                      <div>
+                        <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                        <p className="text-blue-400 font-medium">{exp.company}</p>
+                      </div>
+                      <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
+                    </div>
+                    <p className="text-gray-300">{exp.description}</p>
+                  </div>
                 </div>
-                <p className="text-gray-300">{exp.description}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
