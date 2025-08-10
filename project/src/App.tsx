@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef  } from 'react';
+import { motion } from 'framer-motion';
 import { DiJava, DiPython, DiDocker, DiPostgresql } from 'react-icons/di';
 import { SiC, SiCplusplus, SiKubernetes, SiSpringboot, SiFlutter, SiMysql } from 'react-icons/si';
 import { Server, Pointer, Cloud, Brain, Shield, Mail, Github, X, Menu, Linkedin, User, Briefcase, FolderOpen, MessageSquare,FileText, Send, ExternalLink} from 'lucide-react';
@@ -9,6 +10,27 @@ function App() {
   const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isClickScrolling = useRef(false);
+
+  const aboutRightColumnVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, delay: 0.4 }
+    }
+  };
+
+  const skillsGridVariants = {
+    hidden: { },
+    visible: {
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const skillIconVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -209,39 +231,68 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-950 via-blue-950/30 to-purple-900/20 overflow-hidden">
-        {/* === Single Main Blurred Accent === */}
+        {/* Background elements (unchanged) */}
         <div className="absolute top-1/4 -left-40 w-[28rem] h-[28rem] bg-blue-500/20 rounded-full blur-[120px]"></div>
-
-        {/* === Soft Radial Spotlight === */}
         <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/5 to-black/40"></div>
-
-        {/* === Subtle Grid Texture === */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-[0.04]"></div>
 
         {/* === Main Content === */}
         <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-center px-4 sm:px-6 lg:px-8 py-[15rem]">
-          {/* Left Image */}
-          <div className="flex justify-center md:justify-end">
+          
+          {/* Left Image with animation */}
+          <motion.div 
+            className="flex justify-center md:justify-end"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }} // Changed to whileInView
+            viewport={{ once: false }} // This makes the animation repeat
+            transition={{ duration: 0.8 }}
+          >
             <img
               src="Devanand.jpg"
               alt="Profile"
               className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full object-contain p-2 animate-float"
               style={{ backgroundColor: '#189ad8' }}
             />
-          </div>
+          </motion.div>
 
-          {/* Right Text */}
-          <div className="space-y-6 text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold text-white">
+          {/* Right Text with STAGGERED animation */}
+          <motion.div 
+            className="space-y-6 text-center md:text-left"
+            initial="hidden"
+            whileInView="visible" // Changed to whileInView
+            viewport={{ once: false, amount: 0.2 }} // Repeats animation and triggers it earlier
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } }
+            }}
+          >
+            <motion.h1 
+              className="text-3xl sm:text-4xl md:text-7xl font-bold text-white"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+            >
               Hi, I'm <span className="text-blue-400">Devanand M S</span>
-            </h1>
-            <p className="text-lg md:text-2xl text-gray-300">
+            </motion.h1>
+            
+            <motion.p 
+              className="text-lg md:text-2xl text-gray-300"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+            >
               Software Developer passionate about AI, Machine Learning, Cybersecurity & Cloud Technologies
-            </p>
+            </motion.p>
 
-            {/* === CTA Buttons === */}
-            <div className="flex justify-center md:justify-start space-x-4 pt-2">
-              {/* My Resume Button */}
+            {/* === CTA Buttons (Restored) === */}
+            <motion.div 
+              className="flex justify-center md:justify-start space-x-4 pt-2"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+            >
               <a
                 href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing"
                 target="_blank"
@@ -251,8 +302,6 @@ function App() {
                 <FileText size={20} />
                 <span>My Resume</span>
               </a>
-
-              {/* Contact Me Button */}
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
@@ -260,134 +309,177 @@ function App() {
                 <Send size={20} />
                 <span>Contact Me</span>
               </button>
-            </div>
+            </motion.div>
 
-            {/* Social Links */}
-            <div className="flex justify-center md:justify-start space-x-4 pt-4">
-              <a
-                href="https://github.com/dms2004"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
-              >
+            {/* === Social Links (Restored) === */}
+            <motion.div 
+              className="flex justify-center md:justify-start space-x-4 pt-4"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
+            >
+              <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer" className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
                 <Github size={30} />
               </a>
-              <a
-                href="https://www.linkedin.com/in/devanand-m-s-40a656258/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
-              >
+              <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer" className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
                 <Linkedin size={30} />
               </a>
-              <a
-                href="mailto:devanandms2004@gmail.com"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
-              >
+              <a href="mailto:devanandms2004@gmail.com" className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
                 <Mail size={30} />
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
-
+      
       {/* About Section */}
-      <section id="about" className="py-32 px-4 sm:px-6 lg:px-8">
+      <motion.section 
+        id="about" 
+        className="py-32 px-4 sm:px-6 lg:px-8"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
             About <span className="text-blue-400">Me</span>
-          </h2>
+          </motion.h2>
           
-          {/* This is the main 2-column grid container. It should have only TWO direct children. */}
           <div className="grid md:grid-cols-2 gap-24 items-start">
             
-            {/* === CHILD 1: The Left Column === */}
-            <div className="space-y-10"> {/* Increased vertical spacing */}
+            {/* === CHILD 1: The Left Column (with all content restored) === */}
+            <motion.div 
+              className="space-y-10"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               <h2 className="text-2xl font-bold text-center md:text-center mb-6">
                 Who am I ?
               </h2>
-              
-              {/* We now map over the expertiseAreas array instead of using <p> tags */}
               {expertiseAreas.map((area, index) => (
-                <div key={index} className="flex items-start space-x-6 p-6 bg-gray-800 rounded-xl
-                       transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700"
-                >
+                <div key={index} className="flex items-start space-x-6 p-6 bg-gray-800 rounded-xl transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700">
                   <div>
                     <area.icon className="w-8 h-8 text-blue-400 mt-1" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">{area.title}</h3>  
+                    <h3 className="text-xl font-bold text-white">{area.title}</h3>
                     <p className="text-gray-300 leading-relaxed">{area.description}</p>
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
             
-            {/* === CHILD 2: The Right Column (wrapper for heading and icons) === */}
-            <div className="space-y-10"> 
+            {/* === CHILD 2: The Right Column (with corrected animation) === */}
+            <motion.div 
+              className="space-y-10"
+              variants={aboutRightColumnVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            > 
               <h2 className="text-2xl font-bold text-center md:text-center mb-6">
                 My Skills
               </h2>
-              
-              <div className="grid grid-cols-4 gap-6 text-center">
+              <motion.div 
+                className="grid grid-cols-4 gap-6 text-center"
+                variants={skillsGridVariants}
+              >
                 {techSkills.map((skill, index) => (
-                  <div 
+                  <motion.div 
                     key={index} 
                     className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl
-                              transition-all duration-300 transform hover:-translate-y-1 group"
+                              transition-all duration-300 group"
+                    variants={skillIconVariants}
+                    whileHover={{ y: -5, backgroundColor: "#374151" }} // hover:bg-gray-700
                   >
                     <skill.icon className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400 group-hover:text-gray-400 transition-colors" />
                     <span className="mt-3 text-xs sm:text-sm font-semibold text-white">
                       {skill.name}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-          </div> {/* The 2-column grid container closes here */}
+          </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Experience Section */}
-        <section id="experience" className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-              Professional <span className="text-blue-400">Experience</span>
-            </h2>
-            
-            <div className="space-y-8">
-              {experiences.map((exp, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-center space-x-6 p-8 bg-gray-800 rounded-xl
-                            transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700"
-                >
-                  {/* Logo on the left (Updated to use <img> tag) */}
-                  <div className="w-12 h-12 flex-shrink-0">
-                    <img 
-                      src={exp.logo} 
-                      alt={`${exp.company} logo`} 
-                      className="w-full h-full object-contain" 
-                    />
-                  </div>
-
-                  {/* Text content on the right */}
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                      <div>
-                        <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                        <p className="text-blue-400 font-medium">{exp.company}</p>
-                      </div>
-                      <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
-                    </div>
-                    <p className="text-gray-300">{exp.description}</p>
-                  </div>
+      <motion.section 
+        id="experience" 
+        className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            Professional <span className="text-blue-400">Experience</span>
+          </motion.h2>
+          
+          {/* This container will stagger the animation of each card */}
+          <motion.div 
+            className="space-y-8"
+            variants={{
+              visible: { transition: { staggerChildren: 0.3 } }
+            }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.1 }}
+          >
+            {experiences.map((exp, index) => (
+              <motion.div 
+                key={index} 
+                className="flex items-start space-x-6 p-6 bg-gray-800 rounded-xl transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700" // Removed conflicting transform classes
+                variants={{
+                  hidden: { opacity: 0, y: 50 }, // Starts 50px down
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } // Moves up to final position
+                }}
+                whileHover={{ y: -8, backgroundColor: "#374151" }} // Restores hover effect (gray-700)
+              >
+                {/* Logo on the left */}
+                <div className="w-12 h-12 flex-shrink-0">
+                  <img 
+                    src={exp.logo} 
+                    alt={`${exp.company} logo`} 
+                    className="w-full h-full object-contain" 
+                  />
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+
+                {/* Text content on the right */}
+                <div className="flex-1">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                      <p className="text-blue-400 font-medium">{exp.company}</p>
+                    </div>
+                    <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
+                  </div>
+                  <p className="text-gray-300">{exp.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* Projects Section */}
       <section id="projects" className="py-32 px-4 sm:px-6 lg:px-8">
