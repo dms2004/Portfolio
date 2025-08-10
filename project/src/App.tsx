@@ -478,7 +478,7 @@ function App() {
               {experiences.map((exp, index) => (
                 <motion.div 
                   key={index} 
-                  className="flex items-start space-x-6 p-6 bg-gray-800 rounded-xl transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700" // Removed conflicting transform classes
+                  className="flex items-center space-x-6 p-6 bg-gray-800 rounded-xl transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700" // Removed conflicting transform classes
                   variants={{
                     hidden: { opacity: 0, y: 50 }, // Starts 50px down
                     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } // Moves up to final position
