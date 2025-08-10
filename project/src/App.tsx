@@ -228,6 +228,7 @@ function App() {
           </div>
         )}
       </nav>
+      <main className="overflow-x-hidden">
 
       {/* Hero Section */}
       <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-950 via-blue-950/30 to-purple-900/20 overflow-hidden">
@@ -560,6 +561,7 @@ function App() {
           </div>
         </div>
       </section>  
+      </main>
 
       {/* Footer */}
       <footer className="py-8 text-center border-t border-gray-800">
