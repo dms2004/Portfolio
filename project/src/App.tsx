@@ -208,18 +208,29 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-center px-4 sm:px-6 lg:px-8 py-[15rem]">
-          {/* Left Text Content */}
+      <section className="relative flex items-center justify-center bg-gradient-to-br from-gray-950 via-blue-950/30 to-purple-900/20 overflow-hidden">
+        {/* === Single Main Blurred Accent === */}
+        <div className="absolute top-1/4 -left-40 w-[28rem] h-[28rem] bg-blue-500/20 rounded-full blur-[120px]"></div>
+
+        {/* === Soft Radial Spotlight === */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/5 to-black/40"></div>
+
+        {/* === Subtle Grid Texture === */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/asfalt-dark.png')] opacity-[0.04]"></div>
+
+        {/* === Main Content === */}
+        <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-center px-4 sm:px-6 lg:px-8 py-[15rem]">
+          {/* Left Image */}
           <div className="flex justify-center md:justify-end">
             <img
               src="Devanand.jpg"
               alt="Profile"
               className="w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full object-contain p-2 animate-float"
-              style={{ backgroundColor: '#189ad8' }} // Replace with your hex or rgb
+              style={{ backgroundColor: '#189ad8' }}
             />
           </div>
-          {/* Right Image or DMS Circle */}
+
+          {/* Right Text */}
           <div className="space-y-6 text-center md:text-left">
             <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold text-white">
               Hi, I'm <span className="text-blue-400">Devanand M S</span>
@@ -230,7 +241,6 @@ function App() {
 
             {/* === CTA Buttons === */}
             <div className="flex justify-center md:justify-start space-x-4 pt-2">
-
               {/* My Resume Button */}
               <a
                 href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing"
@@ -241,7 +251,7 @@ function App() {
                 <FileText size={20} />
                 <span>My Resume</span>
               </a>
-              
+
               {/* Contact Me Button */}
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -250,20 +260,30 @@ function App() {
                 <Send size={20} />
                 <span>Contact Me</span>
               </button>
-              
             </div>
-            
+
+            {/* Social Links */}
             <div className="flex justify-center md:justify-start space-x-4 pt-4">
-              <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer" 
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+              <a
+                href="https://github.com/dms2004"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
+              >
                 <Github size={30} />
               </a>
-              <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+              <a
+                href="https://www.linkedin.com/in/devanand-m-s-40a656258/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
+              >
                 <Linkedin size={30} />
               </a>
-              <a href="mailto:devanandms2004@gmail.com"
-                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200">
+              <a
+                href="mailto:devanandms2004@gmail.com"
+                className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors duration-200"
+              >
                 <Mail size={30} />
               </a>
             </div>
@@ -414,7 +434,7 @@ function App() {
               {/* Your Resume Button (as it was) */}
               <div className="mb-12">
                 <a 
-                  href="YOUR_GOOGLE_DRIVE_LINK_HERE" 
+                  href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg"
