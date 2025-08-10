@@ -11,6 +11,11 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isClickScrolling = useRef(false);
 
+   const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   const mobileMenuContainerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -446,9 +451,77 @@ function App() {
         </motion.section>
 
         {/* Experience Section */}
+<motion.section 
+  id="experience" 
+  className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: false, amount: 0.1 }}
+  transition={{ duration: 0.5 }}
+>
+  <div className="max-w-6xl mx-auto">
+    <motion.h2 
+      className="text-3xl md:text-4xl font-bold text-center mb-16"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 0.6 }}
+    >
+      Professional <span className="text-blue-400">Experience</span>
+    </motion.h2>
+    
+    <motion.div 
+      className="space-y-8"
+      variants={{
+        visible: { transition: { staggerChildren: 0.3 } }
+      }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.1 }}
+    >
+      {experiences.map((exp, index) => (
+        <motion.div 
+          key={index} 
+          className="flex items-center space-x-6 p-8 bg-gray-800 rounded-xl
+                     transition-colors duration-300"
+          // --- Animation changed here ---
+          variants={{
+            hidden: { opacity: 0, scale: 0.8 }, // Changed from y: 50 to scale: 0.8
+            visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } // Changed from y: 0 to scale: 1
+          }}
+          // --- Hover effect changed here ---
+          whileHover={{ scale: 1.05, backgroundColor: "#374151" }} // Changed from y: -8 to scale: 1.05
+        >
+          {/* Logo on the left */}
+          <div className="w-12 h-12 flex-shrink-0">
+            <img 
+              src={exp.logo} 
+              alt={`${exp.company} logo`} 
+              className="w-full h-full object-contain" 
+            />
+          </div>
+
+          {/* Text content on the right */}
+          <div className="flex-1">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+              <div>
+                <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                <p className="text-blue-400 font-medium">{exp.company}</p>
+              </div>
+              <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
+            </div>
+            <p className="text-gray-300">{exp.description}</p>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</motion.section>
+
+        {/* Projects Section */}
         <motion.section 
-          id="experience" 
-          className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50"
+          id="projects" 
+          className="py-32 px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: false, amount: 0.1 }}
@@ -462,65 +535,28 @@ function App() {
               viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.6 }}
             >
-              Professional <span className="text-blue-400">Experience</span>
+              Featured <span className="text-blue-400">Projects</span>
             </motion.h2>
             
-            {/* This container will stagger the animation of each card */}
             <motion.div 
-              className="space-y-8"
+              className="grid md:grid-cols-2 gap-8"
               variants={{
-                visible: { transition: { staggerChildren: 0.3 } }
+                visible: { transition: { staggerChildren: 0.2 } }
               }}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.1 }}
             >
-              {experiences.map((exp, index) => (
+              {projects.map((project, index) => (
                 <motion.div 
                   key={index} 
-                  className="flex items-center space-x-6 p-6 bg-gray-800 rounded-xl transition-all duration-300 transform hover:-translate-y-2 hover:bg-gray-700" // Removed conflicting transform classes
+                  className="bg-gray-800 p-8 rounded-xl transition-colors duration-200" // Removed conflicting hover classes
                   variants={{
-                    hidden: { opacity: 0, y: 50 }, // Starts 50px down
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } // Moves up to final position
+                    hidden: { opacity: 0, scale: 0.8 }, // Starts scaled down
+                    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } // Scales up to full size
                   }}
-                  whileHover={{ y: -8, backgroundColor: "#374151" }} // Restores hover effect (gray-700)
+                  whileHover={{ scale: 1.05, backgroundColor: "#374151" }} // Preserves hover effect (gray-700)
                 >
-                  {/* Logo on the left */}
-                  <div className="w-12 h-12 flex-shrink-0">
-                    <img 
-                      src={exp.logo} 
-                      alt={`${exp.company} logo`} 
-                      className="w-full h-full object-contain" 
-                    />
-                  </div>
-
-                  {/* Text content on the right */}
-                  <div className="flex-1">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                      <div>
-                        <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                        <p className="text-blue-400 font-medium">{exp.company}</p>
-                      </div>
-                      <span className="text-gray-400 text-sm mt-2 md:mt-0">{exp.duration}</span>
-                    </div>
-                    <p className="text-gray-300">{exp.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Projects Section */}
-        <section id="projects" className="py-32 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-              Featured <span className="text-blue-400">Projects</span>
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <div key={index} className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-all duration-200 hover:transform hover:scale-105">
                   <h3 className="text-xl font-bold text-white mb-4">{project.title}</h3>
                   <p className="text-gray-300 mb-6">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
@@ -530,66 +566,85 @@ function App() {
                       </span>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
-          {/* Added 'relative' to contain the background icon */}
-          <div className="max-w-6xl mx-auto text-center relative">
-            
-            {/* Wrapper to ensure all your original content stays on top */}
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-16">
-                Get In <span className="text-blue-400">Touch</span>
-              </h2>
-              
-              <div className="max-w-2xl mx-auto">
-                <p className="text-lg text-gray-300 mb-12">
-                  I'm always interested in new opportunities and exciting projects. 
-                  Let's connect and discuss how we can work together.
-                </p>
-                
-                {/* Your Resume Button (as it was) */}
-                <div className="mb-12">
-                  <a 
-                    href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg"
-                  >
-                    <ExternalLink size={20} />
-                    <span>View My Resume</span>
-                  </a>
-                </div>
-                
-                {/* Your Contact Cards (all included) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <a href="mailto:devanandms2004@gmail.com" 
-                    className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                    <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                    <h3 className="font-semibold text-white mb-2">Email</h3>
-                  </a>
-                  
-                  <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer"
-                    className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                    <Github className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                    <h3 className="font-semibold text-white mb-2">GitHub</h3>
-                  </a>
-                  
-                  <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
-                    className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                    <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                    <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>  
+<motion.section 
+  id="contact" 
+  className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: false, amount: 0.1 }}
+  transition={{ staggerChildren: 0.2 }} // This will help sequence the elements
+>
+  <div className="max-w-6xl mx-auto text-center relative">
+    {/* Wrapper for your content */}
+    <div className="relative z-10">
+      <motion.h2 
+        className="text-3xl md:text-4xl font-bold mb-16"
+        variants={fadeInUp}
+        transition={{ duration: 0.6 }}
+      >
+        Get In <span className="text-blue-400">Touch</span>
+      </motion.h2>
+      
+      <div className="max-w-2xl mx-auto">
+        <motion.p 
+          className="text-lg text-gray-300 mb-12"
+          variants={fadeInUp}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          I'm always interested in new opportunities and exciting projects. 
+          Let's connect and discuss how we can work together.
+        </motion.p>
+        
+        {/* Your Resume Button */}
+        <motion.div 
+          className="mb-12"
+          variants={fadeInUp}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <a 
+            href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
+            <ExternalLink size={20} />
+            <span>View My Resume</span>
+          </a>
+        </motion.div>
+        
+        {/* Your Contact Cards */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          variants={fadeInUp}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <a href="mailto:devanandms2004@gmail.com" 
+             className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+            <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+            <h3 className="font-semibold text-white mb-2">Email</h3>
+          </a>
+          <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer"
+             className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+            <Github className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+            <h3 className="font-semibold text-white mb-2">GitHub</h3>
+          </a>
+          <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
+             className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+            <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+            <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
+          </a>
+        </motion.div>
+      </div>
+    </div>
+  </div>
+</motion.section> 
 
       </main>
 
