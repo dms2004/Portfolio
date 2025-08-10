@@ -1,25 +1,41 @@
 import { useState, useEffect, useRef  } from 'react';
 import { DiJava, DiPython, DiDocker, DiPostgresql } from 'react-icons/di';
 import { SiC, SiCplusplus, SiKubernetes, SiSpringboot, SiFlutter, SiMysql } from 'react-icons/si';
-import { Server, Pointer, Cloud, Brain, Shield, Mail, Github, X, Menu, Linkedin, User, Briefcase, FolderOpen, MessageSquare,} from 'lucide-react';
+import { Server, Pointer, Cloud, Brain, Shield, Mail, Github, X, Menu, Linkedin, User, Briefcase, FolderOpen, MessageSquare,FileText, Send, ExternalLink} from 'lucide-react';
 import sedai from './assets/logos/sedai.svg';
 import cdit from './assets/logos/cdit.jpeg';
 
 function App() {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isClickScrolling = useRef(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     const handleScroll = () => {
-      // Add this check at the top
       if (isClickScrolling.current) {
-        return; // Do nothing if a click-scroll is in progress
+        return;
       }
 
       const sections = ['about', 'experience', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 150; 
+      // This offset should be roughly your navbar's height + a small buffer
+      const scrollOffset = 150;
+      const scrollPosition = window.scrollY + scrollOffset;
 
+      // Check if we are above the 'about' section
+      const aboutSection = document.getElementById('about');
+      if (aboutSection && scrollPosition < aboutSection.offsetTop) {
+        setActiveSection(''); // No section is active in the Hero area
+        return;
+      }
+
+      // If we've scrolled past the top, find the current active section
       for (let i = sections.length - 1; i >= 0; i--) {
         const id = sections[i];
         const element = document.getElementById(id);
@@ -122,7 +138,12 @@ function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
         <div className="flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
-          <div className="text-2xl font-bold text-white ml-4 md:ml-10">Devanand M S</div>
+          <button 
+            onClick={scrollToTop} 
+            className="text-2xl font-bold text-white ml-4 md:ml-10 cursor-pointer"
+          >
+            Devanand M S
+          </button>
 
           {/* Desktop Menu (hidden on mobile) */}
           <div className="hidden md:flex space-x-8">
@@ -200,7 +221,7 @@ function App() {
           </div>
           {/* Right Image or DMS Circle */}
           <div className="space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-7xl font-bold text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-7xl font-bold text-white">
               Hi, I'm <span className="text-blue-400">Devanand M S</span>
             </h1>
             <p className="text-lg md:text-2xl text-gray-300">
@@ -209,18 +230,27 @@ function App() {
 
             {/* === CTA Buttons === */}
             <div className="flex justify-center md:justify-start space-x-4 pt-2">
-              <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+
+              {/* My Resume Button */}
+              <a
+                href="https://drive.google.com/file/d/1SuY0wGzCOhG6sdJTtFsY6nyU9Nl5yT2G/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
               >
-                My Projects
-              </button>
+                <FileText size={20} />
+                <span>My Resume</span>
+              </a>
+              
+              {/* Contact Me Button */}
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+                className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
               >
-                Contact Me
+                <Send size={20} />
+                <span>Contact Me</span>
               </button>
+              
             </div>
             
             <div className="flex justify-center md:justify-start space-x-4 pt-4">
@@ -242,7 +272,7 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="about" className="py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             About <span className="text-blue-400">Me</span>
@@ -300,7 +330,7 @@ function App() {
       </section>
 
       {/* Experience Section */}
-        <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <section id="experience" className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               Professional <span className="text-blue-400">Experience</span>
@@ -340,7 +370,7 @@ function App() {
         </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="projects" className="py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
             Featured <span className="text-blue-400">Projects</span>
@@ -365,45 +395,64 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-16">
-            Get In <span className="text-blue-400">Touch</span>
-          </h2>
+      <section id="contact" className="py-32 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        {/* Added 'relative' to contain the background icon */}
+        <div className="max-w-6xl mx-auto text-center relative">
           
-          <div className="max-w-2xl mx-auto">
-            <p className="text-lg text-gray-300 mb-12">
-              I'm always interested in new opportunities and exciting projects. 
-              Let's connect and discuss how we can work together.
-            </p>
+          {/* Wrapper to ensure all your original content stays on top */}
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-16">
+              Get In <span className="text-blue-400">Touch</span>
+            </h2>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              <a href="mailto:devanandms2004@gmail.com" 
-                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                <h3 className="font-semibold text-white mb-2">Email</h3>
-              </a>
+            <div className="max-w-2xl mx-auto">
+              <p className="text-lg text-gray-300 mb-12">
+                I'm always interested in new opportunities and exciting projects. 
+                Let's connect and discuss how we can work together.
+              </p>
               
-              <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer"
-                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                <Github className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                <h3 className="font-semibold text-white mb-2">GitHub</h3>
-              </a>
+              {/* Your Resume Button (as it was) */}
+              <div className="mb-12">
+                <a 
+                  href="YOUR_GOOGLE_DRIVE_LINK_HERE" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-lg"
+                >
+                  <ExternalLink size={20} />
+                  <span>View My Resume</span>
+                </a>
+              </div>
               
-              <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
-                 className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
-                <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
-              </a>
+              {/* Your Contact Cards (all included) */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="mailto:devanandms2004@gmail.com" 
+                  className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                  <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="font-semibold text-white mb-2">Email</h3>
+                </a>
+                
+                <a href="https://github.com/dms2004" target="_blank" rel="noopener noreferrer"
+                  className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                  <Github className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="font-semibold text-white mb-2">GitHub</h3>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/devanand-m-s-40a656258/" target="_blank" rel="noopener noreferrer"
+                  className="bg-gray-800 p-8 rounded-xl hover:bg-gray-700 transition-colors duration-200 group">
+                  <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="font-semibold text-white mb-2">LinkedIn</h3>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </section>  
 
       {/* Footer */}
       <footer className="py-8 text-center border-t border-gray-800">
         <p className="text-gray-400">
-          © 2025 Devanand M S.
+          © 2025 Devanand M S. All Rights Reserved.
         </p>
       </footer>
     </div>
